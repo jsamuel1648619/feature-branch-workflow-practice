@@ -1,19 +1,17 @@
-MAX_NUM = 100000
-
-# 변수 선언 및 입력:
 n = int(input())
-ans = MAX_NUM
+cnt5 = n//5
+coin = n%5
+cnt2 = coin //2
+coin %= 2
+ans = -1
+# 초기의 coin 값은 무조건 0또는 1
+if coin:
+    # cnt5가 0이 아니어야
+    if cnt5:
+        cnt5-=1
+        cnt2+=3
+        ans = cnt5+cnt2
 
-# 사용할 5원 동전의 수를 전부 가정해보며
-# 그 중 가장 좋은 선택을 합니다.
-for i in range(0, MAX_NUM + 1):
-    remainder = n - 5 * i
-    if remainder >= 0 and remainder % 2 == 0:
-        ans = min(ans, i + (remainder // 2))
-
-# 만약 그러한 동전을 만드는 것이 불가능하다면
-# -1을 넣어줍니다.
-if ans == MAX_NUM:
-    ans = -1
-
+else:
+    ans = cnt5+cnt2
 print(ans)
