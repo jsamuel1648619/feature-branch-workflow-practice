@@ -1,45 +1,44 @@
-# 변수 선언 및 입력:
+'''
+M개의 자연수가 있습니다. 이 자연수들을 두 개씩 짝지어
+
+M/2개의 쌍을 만들려고 합니다.
+
+M/2개의 쌍들 중 두 자연수의 합이 가장 큰 쌍의 두 자연수 합을 C라고 할 때,
+
+가능한 C의 최솟값을 구하는 프로그램을 작성해보세요.
+'''
+
+
 n = int(input())
-ans = 0
-
 nums = []
+
 for _ in range(n):
-    x, y = tuple(map(int, input().split()))
-    nums.append((y, x))
+    a,b = map(int,input().split())
 
-# y 기준으로 오름차순 정렬을 진행합니다.
+    nums.append([b,a])
+
 nums.sort()
+# print(nums)
 
-# 최선의 전략을 오름차순 정렬 뒤
-# 가장 작은 수와 큰 수를 하나씩 매칭해주는 것입니다.
-li, ri = 0, n - 1
-while li <= ri:
-    ly, lx = nums[li]
-    ry, rx = nums[ri]
+ans = 0
+left = 0
+right = n-1
 
-    # 답을 갱신합니다.
-    ans = max(ans, ly + ry)
+while left <= right:
+    lb,la = nums[left]
+    rb,ra = nums[right]
 
-    # 왼쪽 개수가 더 적다면
-    # 왼쪽을 전부 매칭시켜줍니다.
-    if lx < rx:
-        # 오른쪽은 lx만큼 개수를 줄여줍니다.
-        nums[ri] = (ry, rx - lx)
-        # 왼쪽 위치를 한칸 뒤로 옮겨줍니다.
-        li += 1
-
-    # 오른쪽 개수가 더 적다면
-    # 오른쪽을 전부 매칭시켜줍니다.
-    elif lx > rx:
-        # 왼쪽은 rx만큼 개수를 줄여줍니다.
-        nums[li] = (ly, lx - rx)
-        # 오른쪽 위치를 한칸 앞으로 옮겨줍니다.
-        ri -= 1
-
-    # 개수가 동일하다면
-    # li, ri 위치 모두 옮겨줍니다.
+    ans = max(ans,lb+rb)
+    if la>ra:
+        nums[left] = [lb,la-ra]
+        # 오른쪽에 남은 개수가 없으므로 포인터 이동
+        right-=1
+    elif la<ra:
+        nums[right] = [rb,ra-la]
+        # 왼쪽에 남은 개수가 없으므로 포인터 이동
+        left+=1
     else:
-        li += 1
-        ri -= 1
+        left +=1
+        right -=1
 
 print(ans)
